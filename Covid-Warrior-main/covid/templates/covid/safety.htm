@@ -1,0 +1,191 @@
+{% extends 'covid/base.htm' %}
+{% load static %}
+{% block css %}
+
+.Title{
+height: 8.5rem;
+display:flex;
+justify-content:center;
+align-items:center;
+background:url("{% static 'covid\images\breadcrumbs.jpg'%}") ;
+background-size:cover;
+}
+.bread{
+background-color:black;
+color: rgb(255,140,0);
+font-size: 1.9rem;
+padding:0.4rem 2rem;
+text-align:center;
+font-weight: 700;
+border-top-left-radius: 1.5rem ;
+border-bottom-right-radius: 1.5rem ;
+}
+.card{
+position: inherit;
+background-color:rgb(255,130,0);
+box-shadow: 0 0 1rem 0.5rem;
+margin: 2rem auto 2rem auto;
+width: 90%;
+height:62.5rem;
+}
+
+.col-md-4
+{
+display: inline-block;
+}
+.col-md-4 img{
+border: 0.2rem solid black;
+border-radius:0.5rem;
+margin-top:1rem;
+width: 82.5%;
+height: 26rem;
+}
+.list-group-item{
+font-size:2.5rem;
+font-weight:700;
+text-align:center;
+position: initial;
+}
+.card-title{
+    font-size:1.5rem;
+    font-weight:700;
+    text-align:center;
+    height:3.5rem;
+    overflow:hidden;
+}
+.card-text{
+    font-size:1.42rem;
+    height:15rem;
+    overflow:auto;
+}
+.row{
+margin: 50px auto 20px auto;
+width: 80%;
+}
+.tit{
+background-color:black;
+color: rgb(255,140,0);
+margin:1%;
+width:98%;
+font-size: 2.5rem;
+font-weight: 700;
+height: 4.75rem;
+padding:0.5rem;
+border-top-right-radius: 2rem ;
+border-bottom-left-radius: 2rem ;
+}
+.tit::before{
+content:"___ __ _";
+font-size:3.5rem;
+font-weight: 100%;
+color:rgb(255,140,0);
+margin:-0.5rem 0 0 2rem;
+position:absolute;
+}
+.buy{
+font-size:1.7rem;
+padding:0.5rem;
+text-decoration:none;
+background-color:rgb(0,0,0);
+font-weight:700;
+color:rgb(255,130,0);
+}
+.buy:hover{
+color:rgb(0,0,0);
+background-color:rgb(255,130,0);
+}
+.filter{
+float:right;
+margin:1rem 3rem;
+}
+.filter lable{
+font-size:2.25rem;
+font-weight:600;
+}
+.filter select{
+background-color:rgb(255,140,0);
+padding:0.3rem 1.5rem;
+font-size:1.5rem;
+font-weight:500;
+}
+select:focus > option:checked{ 
+background-color:black;
+color: rgb(255,140,0);
+}
+input[type=submit]{
+    font-size:1.4rem;
+    padding:0.3rem 1.5rem;
+    border-radius:1.2rem;
+    background:black;
+    color:rgb(255,135,0);
+    font-weight:500;
+}
+
+@media(max-width: 570px ){
+    .card{
+        width:75%;
+    }
+    .tit::before{
+        display:none;
+    }
+}
+
+{% endblock %}
+{% block title %} SAFETY {% endblock %}
+{% block body %}
+<div class="blank"></div>
+<div class="Title w-100 ">
+        <div class="bread">
+            <a style="color: white; font-size: 1.7rem; font-weight: 700; text-decoration: none;" href="/">HOME</a>
+            <span class="divider">/</span>
+            COVID-SHOP
+        </div>
+</div>
+<div class="blank"></div>
+<section>
+    <div class="text-center mt-5">
+        <h2 class="tit">{{title}}</h2>
+    </div>
+    <div class="filter">
+        <form action="" method="GET">
+            <lable for="category">Filter:</lable>
+            <select id="category" name="select">
+                <option class="dropdown-item" value="empty" selected>Select View</option>
+                <option class="dropdown-item" value="all">All Products</option>
+                <option class="dropdown-item" value="category">Category-Wise</option>
+            </select>
+            <input type="submit" value="Apply">
+        </form>
+    </div>
+    {% for category in product %}
+    <div class="row">
+        <h2 style="font-size: 2rem; font-weight: 900;">
+            {% if product|length > 1 %}
+            | {{category.0.category}} |
+            {% endif %}
+        </h2>
+        {% for pro in category %}
+        <div class="col-md-4 col-lg-4 col-sm-6 col-xs-6">
+            <div class="card">
+                <img src="\media\{{pro.product_image}}" class="mx-auto" alt="...">
+                <div class="card-body">
+                    <h4 class="card-title">{{pro.product_name}}</h4>
+                    <p class="card-text"> {{pro.product_desc}}</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <h5 style="display: inline-block;">Price:&nbsp;</h5>{{pro.product_price}}
+                    </li>
+                </ul>
+                <div class="card-body text-center">
+                    <div class="w-100 buy text-center">
+                        <a href="{{pro.link}}" target="_blank" class="buy">Buy Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endfor %}
+</section>
+{% endblock %}
